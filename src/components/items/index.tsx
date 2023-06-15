@@ -11,6 +11,10 @@ function Items() {
 
     const dispatch = useAppDispatch()
 
+    /**
+     * function that calls the RTK function to delete and Item 
+     * @param id Id of the item to be deleted
+     * */
     const handleDeleteItem = async (id?: number) => {
         await deleteItemFunction(id).unwrap().then(() => toast('Item deleted successfully'))
     }
