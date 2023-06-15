@@ -12,9 +12,13 @@ function Home() {
 
     return (
         <div className='w-full h-full bg-gray-200'>
+            {/* Toast container where the notification toasts will be shown */}
             <ToastContainer />
+
+            {/* Flex container where the two main components are contained */}
             <div className='flex flex-col lg:flex-row py-3 mx-auto max-w-7xl'>
                 <div className='lg:basis-[40%]'>
+                    {/* Show either the AddItem component or EditItem component depending on the state boolean for openEditForm from editItemSlice */}
                     {openEditForm === false ? <AddItem /> : <EditItem key={id} />}
                 </div>
                 <div className='lg:basis-[60%]'>
