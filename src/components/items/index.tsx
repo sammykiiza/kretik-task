@@ -3,6 +3,7 @@ import { useDeleteItemMutation, useGetItemsQuery } from '../../services/api'
 import { Spinner } from '../common'
 import { useAppDispatch } from '../../app/hooks'
 import { setEditFormOpenState, setItemId } from '../editItem/editItemSlice'
+import { toast } from 'react-toastify'
 
 function Items() {
     const { data, isFetching, isLoading } = useGetItemsQuery()
@@ -11,11 +12,11 @@ function Items() {
     const dispatch = useAppDispatch()
 
     const handleDeleteItem = async (id?: number) => {
-        await deleteItemFunction(id).unwrap()
+        await deleteItemFunction(id).unwrap().then(() => toast('Item deleted successfully'))
     }
 
     return (
-        <div className='grid grid-cols-2 gap-2 px-3'>
+        <div className='grid grid-cols-1 md:grid-cols-2 gap-2 px-3'>
             {(isLoading || isFetching || isLoadingDelete) &&
                 <div className='absolute mt-64 ml-80'>
                     <Spinner />

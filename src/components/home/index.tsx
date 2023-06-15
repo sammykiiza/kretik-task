@@ -1,4 +1,6 @@
 import React from 'react'
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import AddItem from '../addItem'
 import Items from '../items'
 import { useAppSelector } from '../../app/hooks'
@@ -10,11 +12,12 @@ function Home() {
 
     return (
         <div className='w-full h-full bg-gray-200'>
-            <div className='flex py-3 mx-auto max-w-7xl'>
-                <div className='basis-[40%]'>
+            <ToastContainer />
+            <div className='flex flex-col lg:flex-row py-3 mx-auto max-w-7xl'>
+                <div className='lg:basis-[40%]'>
                     {openEditForm === false ? <AddItem /> : <EditItem key={id} />}
                 </div>
-                <div className='basis-[60%]'>
+                <div className='lg:basis-[60%]'>
                     <Items />
                 </div>
             </div>

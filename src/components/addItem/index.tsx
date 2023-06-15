@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useAddItemMutation } from '../../services/api';
 import { Spinner } from '../common';
 import { useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
 
 function AddItem() {
   const { register, reset } = useForm()
@@ -27,6 +28,7 @@ function AddItem() {
     await addItemFunction(itemData)
       .unwrap()
       .then(() => {
+        toast('Item added successfully')
         reset({
           companyField: '',
           tickerField: '',
