@@ -1,8 +1,11 @@
 import React, { useState } from 'react'
 import { useAddItemMutation } from '../../services/api';
 import { Spinner } from '../common';
+import { useForm } from 'react-hook-form';
 
 function AddItem() {
+  const { register, reset } = useForm()
+
   const [company, setCompany] = useState('');
   const [ticker, setTicker] = useState('');
   const [stockPrice, setStockPrice] = useState('');
@@ -21,7 +24,16 @@ function AddItem() {
       timeElapsed
     }
 
-    await addItemFunction(itemData).unwrap()
+    await addItemFunction(itemData)
+      .unwrap()
+      .then(() => {
+        reset({
+          companyField: '',
+          tickerField: '',
+          stockPriceField: '',
+          timeElapsedField: ''
+        })
+      })
 
   }
 
@@ -34,7 +46,7 @@ function AddItem() {
       }
       <div className="w-full max-w-3xl px-3">
         <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-        <h1 className='text-3xl'>Add Item</h1>
+          <h1 className='text-3xl'>Add Item</h1>
           <div className="mb-4">
             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="company">
               Company Name
@@ -44,9 +56,11 @@ function AddItem() {
               id="company"
               type="text"
               placeholder="Company Name"
-              onChange={(e) => {
-                setCompany(e.target.value)
-              }}
+              {...register('companyField', {
+                onChange: (e) => {
+                  setCompany(e.target.value)
+                }
+              })}
             />
           </div>
           <div className="mb-4">
@@ -58,9 +72,11 @@ function AddItem() {
               id="ticker"
               type="text"
               placeholder="Ticker"
-              onChange={(e) => {
-                setTicker(e.target.value)
-              }}
+              {...register('tickerField', {
+                onChange: (e) => {
+                  setTicker(e.target.value)
+                }
+              })}
             />
           </div>
           <div className="mb-4">
@@ -72,9 +88,11 @@ function AddItem() {
               id="stockPrice"
               type="text"
               placeholder="Stock Price in USD"
-              onChange={(e) => {
-                setStockPrice(e.target.value + ' USD')
-              }}
+              {...register('stockPriceField', {
+                onChange: (e) => {
+                  setStockPrice(e.target.value + ' USD')
+                }
+              })}
             />
           </div>
           <div className="mb-4">
@@ -86,9 +104,11 @@ function AddItem() {
               id="timeElapsed"
               type="text"
               placeholder="Time Elapsed in seconds"
-              onChange={(e) => {
-                setTimeElapsed(e.target.value + ' sec ago')
-              }}
+              {...register('timeElapsedField', {
+                onChange: (e) => {
+                  setTimeElapsed(e.target.value + ' sec ago')
+                }
+              })}
             />
           </div>
           <div className="flex items-center justify-between">
