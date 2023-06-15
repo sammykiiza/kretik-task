@@ -3,7 +3,7 @@ import { useEditItemMutation, useGetOneItemQuery } from '../../services/api';
 import { Spinner } from '../common';
 import { Item } from '../../services/types';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { setEditFormOpenState } from './editItemSlice';
+import { setEditFormOpenState, setItemId } from './editItemSlice';
 
 function EditItem() {
   const id = useAppSelector((state) => state.editSlice.id)
@@ -24,14 +24,21 @@ function EditItem() {
     /** The data to be submitted when creating an item */
     const itemData: Item = {
       id: id,
-      company,
-      ticker,
-      stockPrice,
-      timeElapsed
+      company: company === undefined ? editItem?.company : company,
+      ticker: ticker === undefined ? editItem?.ticker : ticker,
+      stockPrice: stockPrice === undefined ? editItem?.stockPrice : stockPrice,
+      timeElapsed: timeElapsed === undefined ? editItem?.timeElapsed : timeElapsed
     }
 
     /**Make call to api with edited item data */
-    await editItemFunction(itemData).unwrap()
+    await editItemFunction(itemData)
+      .unwrap()
+      .then(() => {
+        dispatch(setEditFormOpenState({
+          open: false
+        }))
+        dispatch(setItemId(0))
+      })
 
   }
 
