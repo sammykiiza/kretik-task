@@ -4,6 +4,7 @@ import { Spinner } from '../common';
 import { Item } from '../../services/types';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { setEditFormOpenState, setItemId } from './editItemSlice';
+import { toast } from 'react-toastify';
 
 function EditItem() {
   const id = useAppSelector((state) => state.editSlice.id)
@@ -34,6 +35,7 @@ function EditItem() {
     await editItemFunction(itemData)
       .unwrap()
       .then(() => {
+        toast('Item edited successfully')
         dispatch(setEditFormOpenState({
           open: false
         }))
